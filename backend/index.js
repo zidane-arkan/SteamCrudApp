@@ -6,6 +6,7 @@ import gameRouter from './routes/gameRoutes.js';
 import LibraryRouter from './routes/libraryRoutes.js';
 import pengembangRouter from './routes/pengembangRoutes.js';
 import TransaksiRouter from './routes/transaksiRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 //Declare Express as app varible
 const app = express();
@@ -39,7 +40,7 @@ app.use('/api/pengembang', pengembangRouter);
 //Listen To Transaksi Req
 app.use('/api/transaksi', TransaksiRouter);
 //Listen To User Req
-app.use('/api/user', dlcRouter);
+app.use('/api/user', userRouter);
 
 
 
