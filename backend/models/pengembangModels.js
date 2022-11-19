@@ -3,16 +3,16 @@ import db from '../database/database.js';
 
 const { DataTypes } = Sequelize;
 
-const Dlc = db.define('dlcs', {
-    dlc_id: {
+const Pengembang = db.define('pengembang', {
+    pengembang_id: {
         type: DataTypes.INTEGER(6),
         primaryKey: true
     },
-    nama_dlc: {
+    nama_pengembang: {
         type: DataTypes.STRING(25),
         allowNull: false
     },
-    tanggal_pembaruan: {
+    tanggal_bergabung: {
         type: DataTypes.DATEONLY,
         allowNull: false
     }
@@ -21,4 +21,4 @@ const Dlc = db.define('dlcs', {
     timestamps: false
 });
 
-export default Dlc;
+export default Pengembang;
