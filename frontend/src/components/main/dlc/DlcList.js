@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import DlcBox from './DlcBox';
+import axios from 'axios';
 
 const DlcList = () => {
+    const apiDlc = 'http://localhost:5000/api/dlc';
+    const [dlcData, setDlcData] = useState([]);
+    useEffect(() => {
+        getAllDlc();
+    }, []);
+    const getAllDlc = async () => {
+        const res = await axios.get(apiDlc);
+        setDlcData(res.data);
+    };
+    const deleteDlc = async (e) => {
+        e.preventDefault();
+        const { id } = e.target;
+        if (window.confirm("Apakah Anda Yakin Ingin menghapus Dlc Ini ? ")) {
+            await axios.delete(`${apiDlc}/${id}`);
+            getAllDlc();
+            console.log(id);
+        }
+    };
     return (
-        <section id="main">
-            <div className="row">
-                <div className="content-wrapper-before gradient-45deg-indigo-purple"></div>
-                <div className="breadcrumbs-dark pb-0 pt-4" id="breadcrumbs-wrapper">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col s10 m6 l6">
-                                <h5 className="breadcrumbs-title mt-0 mb-0"><span>Dlc Page</span></h5>
-                                <ol className="breadcrumbs mb-0">
-                                    <li className="breadcrumb-item"><a href="index.html">Home</a>
-                                    </li>
-                                    <li className="breadcrumb-item"><a href="boy.html">Pages</a>
-                                    </li>
-                                    <li className="breadcrumb-item active">Tabel Dlc
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <DlcBox dlcPath={"List"}>
             <div className="row">
                 <div className="col s12 m12 l12">
                     <div id="bordered-table" className="card card card-default scrollspy">
@@ -35,26 +35,32 @@ const DlcList = () => {
                                     <table className="bordered mt-1">
                                         <thead>
                                             <tr>
-                                                <th data-field="id">Name</th>
-                                                <th data-field="name">Item Name</th>
-                                                <th data-field="price">Item Price</th>
+                                                <th data-field="id">Dlc Id</th>
+                                                <th data-field="name">Nama Dlc</th>
+                                                <th data-field="price">Tanggal Pembaruan</th>
                                                 <th data-field="price">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Alvin</td>
-                                                <td>Eclair</td>
-                                                <td>$0.87</td>
-                                                <td>
-                                                    <Link className="btn-floating mb-1 btn waves-effect waves-light mr-4" to="/dlc/tambah">
-                                                        <i class="material-icons">edit</i>
-                                                    </Link>
-                                                    <Link className="btn-floating mb-1 btn waves-effect waves-light mr-1" to="/dlc/edit">
-                                                        <i class="material-icons">delete</i>
-                                                    </Link>
-                                                </td>
-                                            </tr>
+                                            {
+                                                dlcData.map((dlc, index) => {
+                                                    return (
+                                                        <tr key={dlc.dlc_id}>
+                                                            <td>{dlc.dlc_id}</td>
+                                                            <td>{dlc.nama_dlc}</td>
+                                                            <td>{dlc.tanggal_pembaruan}</td>
+                                                            <td>
+                                                                <Link className="btn-floating mb-1 btn waves-effect waves-light mr-4" to="/dlc/tambah">
+                                                                    <i className="material-icons">edit</i>
+                                                                </Link>
+                                                                <button onClick={deleteDlc} className="btn-floating mb-1 btn waves-effect waves-light mr-1">
+                                                                    <i id={dlc.dlc_id} className="material-icons">delete</i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -63,7 +69,7 @@ const DlcList = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </DlcBox>
     );
 };
 

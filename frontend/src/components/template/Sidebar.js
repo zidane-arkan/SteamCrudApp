@@ -17,8 +17,10 @@ const Sidebar = () => {
                 </h1>
             </div>
             <ul className="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-                <li className="active bold">
-                    <a className="collapsible-header waves-effect waves-cyan" href="#"><i className="material-icons">pages</i><span className="menu-title" data-i18n="Pages">Pages</span></a>
+                <li className="bold active open">
+                    <a className="collapsible-header waves-effect waves-cyan" href="#">
+                        <i className="material-icons">pages</i><span className="menu-title" data-i18n="Pages">Pages</span>
+                    </a>
                     <div className="collapsible-body display-block">
                         <ul className="collapsible collapsible-sub" data-collapsible="accordion">
                             <li className="active">
